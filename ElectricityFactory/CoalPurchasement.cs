@@ -34,10 +34,10 @@ namespace ElectricityFactory
                 _planning = (Planning)xml.Deserialize(xmlReader);
             }
 
-            numericUpDown_totalCoal.Value = _planning.TotalCoalAmount;
-            numericUpDown_totalMoney.Value = _planning.AveragePrice;
-            numericUpDown_qnet.Value = _planning.AverageQnetThreshold;
-            numericUpDown_vad.Value = _planning.AverageVadThreshold;
+            numericUpDown_totalCoal.Value = Convert.ToDecimal(_planning.TotalCoalAmount);
+            numericUpDown_totalMoney.Value = Convert.ToDecimal(_planning.AveragePrice);
+            numericUpDown_qnet.Value = Convert.ToDecimal(_planning.AverageQnetThreshold);
+            numericUpDown_vad.Value = Convert.ToDecimal(_planning.AverageVadThreshold);
             numericUpDown_sad.Value = Convert.ToDecimal(_planning.AverageSadThreshold);
         }
 
@@ -101,22 +101,22 @@ namespace ElectricityFactory
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
-            _planning.TotalCoalAmount = Convert.ToInt16(numericUpDown_totalCoal.Value * 3);
+            _planning.TotalCoalAmount = Convert.ToSingle(numericUpDown_totalCoal.Value);
         }
 
         private void numericUpDown2_ValueChanged(object sender, EventArgs e)
         {
-            _planning.AveragePrice = Convert.ToInt16(numericUpDown_totalMoney.Value);
+            _planning.AveragePrice = Convert.ToSingle(numericUpDown_totalMoney.Value);
         }
 
         private void numericUpDown_qnet_ValueChanged(object sender, EventArgs e)
         {
-            _planning.AverageQnetThreshold = Convert.ToInt16(numericUpDown_qnet.Value);
+            _planning.AverageQnetThreshold = Convert.ToSingle(numericUpDown_qnet.Value);
         }
 
         private void numericUpDown_vad_ValueChanged(object sender, EventArgs e)
         {
-            _planning.AverageVadThreshold = Convert.ToInt16(numericUpDown_vad.Value);
+            _planning.AverageVadThreshold = Convert.ToSingle(numericUpDown_vad.Value);
         }
 
         private void numericUpDown_sad_ValueChanged(object sender, EventArgs e)

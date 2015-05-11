@@ -22,6 +22,8 @@ namespace ElectricityFactory
 
         public List<List<float>> Run(float priceLimit, float qLimit, float vadLimit, float sadLimit)
         {
+            SupplyDistribution.CandidateList = new List<List<float>>();
+            SupplyDistribution.StopComputing = false;
             SupplyDistribution.TotalAmount = _totalAmount;
             SupplyDistribution.TotalVendorCount = VendorList.Count;
             SupplyDistribution.VendorList = VendorList;
@@ -30,9 +32,34 @@ namespace ElectricityFactory
             SupplyDistribution.VLimit = vadLimit;
             SupplyDistribution.SLimit = sadLimit;
             SupplyDistribution.ActiveDistribute = new float[VendorList.Count];
-            SupplyDistribution.Distribute(_totalAmount, VendorList);
-            
-            return SupplyDistribution.CandidateList;
-        } 
+            SupplyDistribution.CandidateThreshold = 100;
+            SupplyDistribution.StartTime = DateTime.Now;
+            List<Vendor> shuffledVendorList = SupplyDistribution.ShuffleList(VendorList);
+            SupplyDistribution.Distribute(_totalAmount, shuffledVendorList);
+
+            List<List<float>> unshuffledCandidateList = new List<List<float>>();
+
+            List<int> shuffleReverseOrder = new List<int>();
+
+            foreach (Vendor vendor in VendorList)
+            {
+                for (int n = 0; n < shuffledVendorList.Count; n++)
+                {
+                    if (vendor.Name == shuffledVendorList[n].Name)
+                    {
+                        shuffleReverseOrder.Add(n);
+                        break;
+                    }
+                }
+            }
+
+
+            foreach (var candidate in SupplyDistribution.CandidateList)
+            {
+                List<float> unshuffledCandidate = shuffleReverseOrder.Select(originalIndex => candidate[originalIndex]).ToList();
+                unshuffledCandidateList.Add(unshuffledCandidate);
+            }
+            return unshuffledCandidateList;
+        }
     }
 }
