@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectricityFactory", "ElectricityFactory\ElectricityFactory.csproj", "{FA4AE817-6E45-4ABC-9189-BBDF3DDF1C8B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{406691A2-C293-4469-B075-6E9E08D398E3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FA4AE817-6E45-4ABC-9189-BBDF3DDF1C8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA4AE817-6E45-4ABC-9189-BBDF3DDF1C8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA4AE817-6E45-4ABC-9189-BBDF3DDF1C8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA4AE817-6E45-4ABC-9189-BBDF3DDF1C8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{406691A2-C293-4469-B075-6E9E08D398E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{406691A2-C293-4469-B075-6E9E08D398E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{406691A2-C293-4469-B075-6E9E08D398E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{406691A2-C293-4469-B075-6E9E08D398E3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

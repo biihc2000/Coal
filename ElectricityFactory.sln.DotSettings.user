@@ -1,0 +1,8 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	
+	
+	
+	<s:Boolean x:Key="/Default/Housekeeping/UnitTestingMru/UnitTestSessionPersistentData/=AD86254EF8ED4EAB9AB4D7322119BDA0/@KeyIndexDefined">True</s:Boolean>
+	<s:Int64 x:Key="/Default/Housekeeping/UnitTestingMru/UnitTestSessionPersistentData/=AD86254EF8ED4EAB9AB4D7322119BDA0/GroupingIndex/@EntryValue">4</s:Int64>
+	<s:String x:Key="/Default/Housekeeping/UnitTestingMru/UnitTestSessionPersistentData/=AD86254EF8ED4EAB9AB4D7322119BDA0/Name/@EntryValue">print_all_possible_supplies</s:String>
+	<s:String x:Key="/Default/Housekeeping/UnitTestingMru/UnitTestSessionPersistentData/=AD86254EF8ED4EAB9AB4D7322119BDA0/XmlSerializedElements/@EntryValue">&lt;Session&gt;&lt;e Id="UnitTest.SupplyDistributionTest.print_all_possible_supplies" Project="406691A2-C293-4469-B075-6E9E08D398E3" Provider="MSTest" /&gt;&lt;e Id="UnitTest.SupplyDistributionTest" Project="406691A2-C293-4469-B075-6E9E08D398E3" Provider="MSTest" /&gt;&lt;e Id="UnitTest.PurchaseEngineTest.print_all_candidates" Project="406691A2-C293-4469-B075-6E9E08D398E3" Provider="MSTest" /&gt;&lt;e Id="UnitTest.PurchaseEngineTest" Project="406691A2-C293-4469-B075-6E9E08D398E3" Provider="MSTest" /&gt;&lt;/Session&gt;</s:String></wpf:ResourceDictionary>
