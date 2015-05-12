@@ -11,13 +11,11 @@ namespace ElectricityFactory
     {
         public List<Vendor> VendorList { get; set; }
         private readonly float _totalAmount;
-        private readonly int _vendorCount;
 
         public PurchaseEngine(float totalAmount, List<Vendor> vendorList)
         {
             VendorList = vendorList;
             _totalAmount = totalAmount;
-            _vendorCount = vendorList.Count;
         }
 
         public List<List<float>> Run(float priceLimit, float qLimit, float vadLimit, float sadLimit)
@@ -33,9 +31,15 @@ namespace ElectricityFactory
             SupplyDistribution.SLimit = sadLimit;
             SupplyDistribution.ActiveDistribute = new float[VendorList.Count];
             SupplyDistribution.CandidateThreshold = 100;
-            SupplyDistribution.StartTime = DateTime.Now;
-            List<Vendor> shuffledVendorList = SupplyDistribution.ShuffleList(VendorList);
-            SupplyDistribution.Distribute(_totalAmount, shuffledVendorList);
+
+            List<Vendor> shuffledVendorList = new List<Vendor>();
+            while (SupplyDistribution.CandidateList.Count == 0)
+            {
+                shuffledVendorList = SupplyDistribution.ShuffleList(VendorList);
+                SupplyDistribution.StartTime = DateTime.Now;
+                SupplyDistribution.StopComputing = false;
+                SupplyDistribution.Distribute(_totalAmount, shuffledVendorList);
+            }
 
             List<List<float>> unshuffledCandidateList = new List<List<float>>();
 
@@ -52,7 +56,6 @@ namespace ElectricityFactory
                     }
                 }
             }
-
 
             foreach (var candidate in SupplyDistribution.CandidateList)
             {

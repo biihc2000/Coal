@@ -77,6 +77,10 @@ namespace ElectricityFactory
             SavePlanning();
 
             PurchaseEngine engine = new PurchaseEngine(_planning.TotalCoalAmount, _vendorList);
+
+            BackgroundWorker runEngine = new BackgroundWorker();
+            runEngine.DoWork += runEngine_DoWork;
+
             var list = engine.Run(_planning.AveragePrice, _planning.AverageQnetThreshold, _planning.AverageVadThreshold, _planning.AverageSadThreshold);
 
             for (int i = 0; i < list.Count; i++)
@@ -88,6 +92,11 @@ namespace ElectricityFactory
                     dataGridView1.Rows[index].Cells[j+1].Value = (list[i][j]).ToString("F");
                 }
             }
+        }
+
+        void runEngine_DoWork(object sender, DoWorkEventArgs e)
+        {
+            
         }
 
         private void SavePlanning()

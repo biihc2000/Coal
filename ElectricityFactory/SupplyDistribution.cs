@@ -83,7 +83,6 @@ namespace ElectricityFactory
                 TimeSpan elipsedTime = DateTime.Now - StartTime;
                 if (elipsedTime.Seconds > 5)
                     StopComputing = true;
-
             }
             else
             {
@@ -95,8 +94,6 @@ namespace ElectricityFactory
 
                     float currentDistribute = possibleDistributes[index];
                     ActiveDistribute[TotalVendorCount - vendorList.Count] = currentDistribute;
-
-
                     Distribute(total - currentDistribute, vendorList.GetRange(1, vendorList.Count - 1));
                 }
             }
