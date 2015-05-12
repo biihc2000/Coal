@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
@@ -72,36 +67,71 @@ namespace ElectricityFactory
 
         private void button1_Click(object sender, EventArgs e)
         {
+            buttonCompute.Enabled = false;
             dataGridView1.Rows.Clear();
-
             SavePlanning();
-
-            PurchaseEngine engine = new PurchaseEngine(_planning.TotalCoalAmount, _vendorList);
 
             BackgroundWorker runEngine = new BackgroundWorker();
             runEngine.DoWork += runEngine_DoWork;
+            runEngine.RunWorkerAsync();
 
-            var list = engine.Run(_planning.AveragePrice, _planning.AverageQnetThreshold, _planning.AverageVadThreshold, _planning.AverageSadThreshold);
-
-            for (int i = 0; i < list.Count; i++)
-            {
-                int index = dataGridView1.Rows.Add();
-                dataGridView1.Rows[index].Cells[0].Value = index;
-                for (int j = 0; j < list[i].Count; j++)
-                {
-                    dataGridView1.Rows[index].Cells[j+1].Value = (list[i][j]).ToString("F");
-                }
-            }
         }
 
         void runEngine_DoWork(object sender, DoWorkEventArgs e)
         {
-            
+            PurchaseEngine engine = new PurchaseEngine(_planning.TotalCoalAmount, _vendorList);
+            engine.OnNotifitify += engine_OnNotifitify;
+            engine.OnFinished += engine_OnFinished;
+
+            engine.RunAsync(_planning.AveragePrice, _planning.AverageQnetThreshold, _planning.AverageVadThreshold, _planning.AverageSadThreshold);
+
+        }
+
+        void engine_OnFinished(object sender, FinishEventArgs e)
+        {
+            dataGridView1.BeginInvoke(new RefreshTableDelegate(RefreshTable), e.Candidates);
+        }
+
+        public delegate void UpdateDelegate(string message);
+
+        public delegate void RefreshTableDelegate(List<PurchaseCandidate> candidates);
+
+        private void RefreshTable(List<PurchaseCandidate> list)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                int index = dataGridView1.Rows.Add();
+                dataGridView1.Rows[index].Cells[0].Value = index;
+                dataGridView1.Rows[index].Cells[0].Value = list[i].ActualTotalAmount;
+                dataGridView1.Rows[index].Cells[1].Value = list[i].ActualAveragePrice;
+                dataGridView1.Rows[index].Cells[2].Value = list[i].ActualAverageQ;
+                dataGridView1.Rows[index].Cells[3].Value = list[i].ActualAverageV;
+                dataGridView1.Rows[index].Cells[4].Value = list[i].ActualAverageS;
+
+
+                for (int j = 0; j < list[i].PurchaseAmountList.Count; j++)
+                {
+                    dataGridView1.Rows[index].Cells[j + 5].Value = (list[i].PurchaseAmountList[j]).ToString("F");
+                }
+            }
+
+            buttonCompute.Enabled = true;
+            buttonCompute.Text = "开始计算";
+        }
+
+        private void UpdateButtonText(string message)
+        {
+            buttonCompute.Text = message;
+        }
+
+        void engine_OnNotifitify(object sender, MessageEventArgs e)
+        {
+            buttonCompute.BeginInvoke(new UpdateDelegate(UpdateButtonText), e.Msg);
         }
 
         private void SavePlanning()
         {
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof (Planning));
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(Planning));
             using (FileStream fileStream = new FileStream("planning.config", FileMode.Create))
             {
                 xmlSerializer.Serialize(fileStream, _planning);

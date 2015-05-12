@@ -37,7 +37,7 @@ namespace UnitTest
             }
             
             PurchaseEngine engine = new PurchaseEngine(60,vendorList);
-            var list = engine.Run(500, 5000, 23, 1.2f);
+            var list = engine.RunAsync(500, 5000, 23, 1.2f);
             Console.WriteLine(list.Count);
             foreach (List<int> candidate in list)
             {

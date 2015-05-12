@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ElectricityFactory
 {
@@ -11,6 +7,8 @@ namespace ElectricityFactory
     {
         public List<Vendor> VendorList { get; set; }
         private readonly float _totalAmount;
+        public event EventHandler<MessageEventArgs> OnNotifitify;
+        public event EventHandler<FinishEventArgs> OnFinished;
 
         public PurchaseEngine(float totalAmount, List<Vendor> vendorList)
         {
@@ -18,30 +16,40 @@ namespace ElectricityFactory
             _totalAmount = totalAmount;
         }
 
-        public List<List<float>> Run(float priceLimit, float qLimit, float vadLimit, float sadLimit)
+        public void RunAsync(float priceLimit, float qLimit, float vadLimit, float sadLimit)
         {
-            SupplyDistribution.CandidateList = new List<List<float>>();
+            SupplyDistribution.CandidateList = new List<PurchaseCandidate>();
             SupplyDistribution.StopComputing = false;
             SupplyDistribution.TotalAmount = _totalAmount;
             SupplyDistribution.TotalVendorCount = VendorList.Count;
-            SupplyDistribution.VendorList = VendorList;
             SupplyDistribution.PriceLimit = priceLimit;
             SupplyDistribution.QLimit = qLimit;
             SupplyDistribution.VLimit = vadLimit;
             SupplyDistribution.SLimit = sadLimit;
             SupplyDistribution.ActiveDistribute = new float[VendorList.Count];
-            SupplyDistribution.CandidateThreshold = 100;
+            SupplyDistribution.CandidateThreshold = 50;
 
             List<Vendor> shuffledVendorList = new List<Vendor>();
+            int times = 1;
             while (SupplyDistribution.CandidateList.Count == 0)
             {
+                OnNotifitify(this,new MessageEventArgs(@"尝试 "+times+" 次..."));
                 shuffledVendorList = SupplyDistribution.ShuffleList(VendorList);
+                SupplyDistribution.VendorList = shuffledVendorList;
                 SupplyDistribution.StartTime = DateTime.Now;
                 SupplyDistribution.StopComputing = false;
                 SupplyDistribution.Distribute(_totalAmount, shuffledVendorList);
+                times++;
             }
 
-            List<List<float>> unshuffledCandidateList = new List<List<float>>();
+            var unshuffledCandidateList = AppendToCandidateList(shuffledVendorList);
+
+            OnFinished(this, new FinishEventArgs(unshuffledCandidateList));
+        }
+
+        private List<PurchaseCandidate> AppendToCandidateList(List<Vendor> shuffledVendorList)
+        {
+            List<PurchaseCandidate> unshuffledCandidateList = new List<PurchaseCandidate>();
 
             List<int> shuffleReverseOrder = new List<int>();
 
@@ -59,10 +67,34 @@ namespace ElectricityFactory
 
             foreach (var candidate in SupplyDistribution.CandidateList)
             {
-                List<float> unshuffledCandidate = shuffleReverseOrder.Select(originalIndex => candidate[originalIndex]).ToList();
-                unshuffledCandidateList.Add(unshuffledCandidate);
+                List<float> unshuffledCandidates = new List<float>();
+                foreach (int originalIndex in shuffleReverseOrder)
+                {
+                    unshuffledCandidates.Add(candidate.PurchaseAmountList[originalIndex]);
+                }
+                candidate.PurchaseAmountList = unshuffledCandidates;
+                unshuffledCandidateList.Add(candidate);
             }
             return unshuffledCandidateList;
+        }
+    }
+
+    public class FinishEventArgs : EventArgs
+    {
+        public List<PurchaseCandidate> Candidates { get; set; }
+
+        public FinishEventArgs(List<PurchaseCandidate> candidates)
+        {
+            Candidates = candidates;
+        }
+    }
+
+    public class MessageEventArgs : EventArgs
+    {
+        public string Msg { get; set; }
+        public MessageEventArgs(string msg)
+        {
+            Msg = msg;
         }
     }
 }

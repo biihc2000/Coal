@@ -29,13 +29,23 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CoalPurchasement));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.IndexColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnActualTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column_actualAvgPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnAvgQ = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnAvgV = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnAvgS = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.VendorColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.VendorColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.VendorColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -59,11 +69,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.numericUpDown_totalCoal = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.buttonVendorSave = new System.Windows.Forms.Button();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.buttonCompute = new System.Windows.Forms.Button();
+            this.buttonVendorSave = new System.Windows.Forms.Button();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -87,7 +98,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1344, 686);
+            this.tabControl1.Size = new System.Drawing.Size(1429, 700);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -97,7 +108,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1336, 657);
+            this.tabPage1.Size = new System.Drawing.Size(1421, 695);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "采购计划";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -106,6 +117,7 @@
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -116,7 +128,11 @@
             this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.IndexColumn,
+            this.ColumnActualTotal,
+            this.Column_actualAvgPrice,
+            this.ColumnAvgQ,
+            this.ColumnAvgV,
+            this.ColumnAvgS,
             this.VendorColumn1,
             this.VendorColumn2,
             this.VendorColumn3,
@@ -129,27 +145,62 @@
             this.VendorColumn10,
             this.VendorColumn11,
             this.VendorColumn12});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle7;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(3, 139);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowTemplate.Height = 27;
-            this.dataGridView1.Size = new System.Drawing.Size(1330, 515);
+            this.dataGridView1.Size = new System.Drawing.Size(1415, 553);
             this.dataGridView1.TabIndex = 1;
             // 
-            // IndexColumn
+            // ColumnActualTotal
             // 
-            this.IndexColumn.HeaderText = "序号";
-            this.IndexColumn.Name = "IndexColumn";
-            this.IndexColumn.ReadOnly = true;
+            this.ColumnActualTotal.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.ColumnActualTotal.DefaultCellStyle = dataGridViewCellStyle2;
+            this.ColumnActualTotal.HeaderText = "实现采购量";
+            this.ColumnActualTotal.Name = "ColumnActualTotal";
+            this.ColumnActualTotal.ReadOnly = true;
+            // 
+            // Column_actualAvgPrice
+            // 
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.Column_actualAvgPrice.DefaultCellStyle = dataGridViewCellStyle3;
+            this.Column_actualAvgPrice.HeaderText = "实际平均标单价";
+            this.Column_actualAvgPrice.Name = "Column_actualAvgPrice";
+            this.Column_actualAvgPrice.ReadOnly = true;
+            // 
+            // ColumnAvgQ
+            // 
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.ColumnAvgQ.DefaultCellStyle = dataGridViewCellStyle4;
+            this.ColumnAvgQ.HeaderText = "实际平均发热量";
+            this.ColumnAvgQ.Name = "ColumnAvgQ";
+            this.ColumnAvgQ.ReadOnly = true;
+            // 
+            // ColumnAvgV
+            // 
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.ColumnAvgV.DefaultCellStyle = dataGridViewCellStyle5;
+            this.ColumnAvgV.HeaderText = "实际平均挥发份";
+            this.ColumnAvgV.Name = "ColumnAvgV";
+            this.ColumnAvgV.ReadOnly = true;
+            // 
+            // ColumnAvgS
+            // 
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.ColumnAvgS.DefaultCellStyle = dataGridViewCellStyle6;
+            this.ColumnAvgS.HeaderText = "实际平均硫份";
+            this.ColumnAvgS.Name = "ColumnAvgS";
+            this.ColumnAvgS.ReadOnly = true;
             // 
             // VendorColumn1
             // 
@@ -247,11 +298,11 @@
             this.panel3.Controls.Add(this.label2);
             this.panel3.Controls.Add(this.numericUpDown_totalCoal);
             this.panel3.Controls.Add(this.label1);
-            this.panel3.Controls.Add(this.button1);
+            this.panel3.Controls.Add(this.buttonCompute);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(3, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1330, 136);
+            this.panel3.Size = new System.Drawing.Size(1415, 136);
             this.panel3.TabIndex = 2;
             // 
             // numericUpDown_sad
@@ -355,19 +406,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "计划采购量(万吨):";
             // 
-            // button1
-            // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.BackColor = System.Drawing.Color.Transparent;
-            this.button1.Location = new System.Drawing.Point(1146, 22);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(165, 93);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "开始计算";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.panel2);
@@ -375,7 +413,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1336, 657);
+            this.tabPage2.Size = new System.Drawing.Size(1421, 671);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "供应商信息";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -384,57 +422,87 @@
             // 
             this.panel2.Controls.Add(this.buttonVendorSave);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(3, 574);
+            this.panel2.Location = new System.Drawing.Point(3, 588);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1330, 80);
+            this.panel2.Size = new System.Drawing.Size(1415, 80);
             this.panel2.TabIndex = 1;
-            // 
-            // buttonVendorSave
-            // 
-            this.buttonVendorSave.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonVendorSave.Location = new System.Drawing.Point(0, 0);
-            this.buttonVendorSave.Name = "buttonVendorSave";
-            this.buttonVendorSave.Size = new System.Drawing.Size(1330, 80);
-            this.buttonVendorSave.TabIndex = 0;
-            this.buttonVendorSave.Text = "保存修改";
-            this.buttonVendorSave.UseVisualStyleBackColor = true;
-            this.buttonVendorSave.Click += new System.EventHandler(this.buttonVendorSave_Click);
             // 
             // dataGridView2
             // 
             this.dataGridView2.AllowUserToAddRows = false;
             this.dataGridView2.AllowUserToDeleteRows = false;
             this.dataGridView2.AllowUserToOrderColumns = true;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView2.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.dataGridView2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView2.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView2.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView2.DefaultCellStyle = dataGridViewCellStyle9;
             this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView2.Location = new System.Drawing.Point(3, 3);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.RowTemplate.Height = 27;
-            this.dataGridView2.Size = new System.Drawing.Size(1330, 651);
+            this.dataGridView2.Size = new System.Drawing.Size(1415, 665);
             this.dataGridView2.TabIndex = 0;
+            // 
+            // buttonCompute
+            // 
+            this.buttonCompute.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonCompute.BackColor = System.Drawing.Color.Transparent;
+            this.buttonCompute.Image = global::ElectricityFactory.Properties.Resources._1431456553_Play;
+            this.buttonCompute.Location = new System.Drawing.Point(1217, 22);
+            this.buttonCompute.Name = "buttonCompute";
+            this.buttonCompute.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
+            this.buttonCompute.Size = new System.Drawing.Size(179, 93);
+            this.buttonCompute.TabIndex = 0;
+            this.buttonCompute.Text = "开始计算";
+            this.buttonCompute.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.buttonCompute.UseVisualStyleBackColor = false;
+            this.buttonCompute.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // buttonVendorSave
+            // 
+            this.buttonVendorSave.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonVendorSave.Image = global::ElectricityFactory.Properties.Resources._1431457157_save_48;
+            this.buttonVendorSave.Location = new System.Drawing.Point(0, 0);
+            this.buttonVendorSave.Name = "buttonVendorSave";
+            this.buttonVendorSave.Size = new System.Drawing.Size(1415, 80);
+            this.buttonVendorSave.TabIndex = 0;
+            this.buttonVendorSave.Text = "    保存修改";
+            this.buttonVendorSave.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonVendorSave.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.buttonVendorSave.UseVisualStyleBackColor = true;
+            this.buttonVendorSave.Click += new System.EventHandler(this.buttonVendorSave_Click);
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Location = new System.Drawing.Point(0, 700);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(1429, 24);
+            this.statusStrip1.TabIndex = 0;
+            this.statusStrip1.Text = "statusStrip1";
             // 
             // CoalPurchasement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1344, 686);
+            this.ClientSize = new System.Drawing.Size(1429, 724);
             this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.statusStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "CoalPurchasement";
             this.Text = "煤炭采购计划";
             this.tabControl1.ResumeLayout(false);
@@ -451,6 +519,7 @@
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -458,13 +527,28 @@
 
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonCompute;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.Button buttonVendorSave;
-        private System.Windows.Forms.DataGridViewTextBoxColumn IndexColumn;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.NumericUpDown numericUpDown_totalCoal;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown numericUpDown_totalMoney;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.NumericUpDown numericUpDown_sad;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.NumericUpDown numericUpDown_vad;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.NumericUpDown numericUpDown_qnet;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnActualTotal;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column_actualAvgPrice;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnAvgQ;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnAvgV;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnAvgS;
         private System.Windows.Forms.DataGridViewTextBoxColumn VendorColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn VendorColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn VendorColumn3;
@@ -477,17 +561,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn VendorColumn10;
         private System.Windows.Forms.DataGridViewTextBoxColumn VendorColumn11;
         private System.Windows.Forms.DataGridViewTextBoxColumn VendorColumn12;
-        private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.NumericUpDown numericUpDown_totalCoal;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.NumericUpDown numericUpDown_totalMoney;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.NumericUpDown numericUpDown_sad;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.NumericUpDown numericUpDown_vad;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.NumericUpDown numericUpDown_qnet;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.StatusStrip statusStrip1;
     }
 }
 
