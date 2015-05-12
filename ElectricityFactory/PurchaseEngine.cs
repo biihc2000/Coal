@@ -31,7 +31,7 @@ namespace ElectricityFactory
 
             List<Vendor> shuffledVendorList = new List<Vendor>();
             int times = 1;
-            while (SupplyDistribution.CandidateList.Count == 0)
+            while (SupplyDistribution.CandidateList.Count == 0 && times <= 10)
             {
                 OnNotifitify(this,new MessageEventArgs(@"尝试 "+times+" 次..."));
                 shuffledVendorList = SupplyDistribution.ShuffleList(VendorList);
